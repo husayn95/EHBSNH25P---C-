@@ -14,10 +14,10 @@ namespace CManager.Presentation.ConsoleApp.Services
         //sämtar alla kunder
         List<Customer> GetAll();
 
-        //sämtar en specifik kund baserat på e-post
+        //sämtar en specifik kund baserat på epost
         Customer? GetByEmail(string email);
 
-        //tar bort en kund baserat på e-post
+        //tar bort en kund baserat på epost
         bool DeleteByEmail(string email);
     }
 }

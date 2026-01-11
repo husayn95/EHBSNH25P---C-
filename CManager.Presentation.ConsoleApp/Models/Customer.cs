@@ -5,26 +5,24 @@ using System.Text;
 
 namespace CManager.Presentation.ConsoleApp.Models
 {
-    // Customer representerar en kund i systemet.
-    // Klassen används som en datamodell (Model).
     public class Customer
     {
-        // Unikt ID för varje kund
+        //unikt ID för varje kund
         public Guid Id { get; set; }
 
-        // Kundens förnamn
+        //kundens förnamn
         public string FirstName { get; set; } = null!;
 
-        // Kundens efternamn
+        //kundens efternamn
         public string LastName { get; set; } = null!;
 
-        // Kundens e-postadress ( för att identifiera kunden)
+        //kundens epostadress 
         public string Email { get; set; } = null!;
 
-        // kundens telefonnummer
+        //kundens telefonnummer
         public string Phone { get; set; } = null!;
 
-        // Kundens adress 
+        //kundens adress 
         public Address Address { get; set; } = null!;
     }
 
