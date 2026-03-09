@@ -2,12 +2,6 @@
 
 /*
 CourseList hanterar alla kurser i systemet.
-
-Funktioner:
-GET    /courses        → hämta kurser
-POST   /courses        → skapa kurs
-PUT    /courses/{id}   → uppdatera kurs
-DELETE /courses/{id}   → ta bort kurs
 */
 
 function CourseList() {
@@ -20,7 +14,7 @@ function CourseList() {
 
 
     /*
-    Hämtar alla kurser från backend
+    Hämtar alla kurser
     */
 
     const loadCourses = () => {
@@ -38,14 +32,14 @@ function CourseList() {
 
 
     /*
-    Skapa ny kurs
+    Skapa kurs
     */
 
     const addCourse = async () => {
 
         const course = {
             title: title,
-            teacher: teacher
+            teacherName: teacher
         };
 
         await fetch("https://localhost:7112/courses", {
@@ -70,10 +64,6 @@ function CourseList() {
 
     const deleteCourse = async (id) => {
 
-        const confirmDelete = window.confirm("Are you sure you want to delete this course?");
-
-        if (!confirmDelete) return;
-
         await fetch(`https://localhost:7112/courses/${id}`, {
             method: "DELETE"
         });
@@ -91,7 +81,10 @@ function CourseList() {
 
         setEditingId(course.id);
         setTitle(course.title);
-        setTeacher(course.teacher);
+
+        if (course.courseInstances?.length > 0) {
+            setTeacher(course.courseInstances[0].teacher?.name || "");
+        }
 
     };
 
@@ -104,8 +97,9 @@ function CourseList() {
     const updateCourse = async () => {
 
         const updatedCourse = {
+            id: editingId,
             title: title,
-            teacher: teacher
+            teacherName: teacher
         };
 
         await fetch(`https://localhost:7112/courses/${editingId}`, {
@@ -138,7 +132,7 @@ function CourseList() {
             />
 
             <input
-                placeholder="Teacher"
+                placeholder="Teacher name"
                 value={teacher}
                 onChange={(e) => setTeacher(e.target.value)}
                 style={{ marginLeft: "10px" }}
@@ -182,7 +176,15 @@ function CourseList() {
                         }}
                     >
 
-                        <strong>{course.title}</strong> - {course.teacher}
+                        <strong>{course.title}</strong>
+
+                        {" - "}
+
+                        {
+                            course.courseInstances && course.courseInstances.length > 0
+                                ? course.courseInstances[0].teacher?.name
+                                : "No teacher assigned"
+                        }
 
                         <button
                             onClick={() => startEdit(course)}
